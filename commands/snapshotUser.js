@@ -13,6 +13,6 @@ module.exports = {
   async execute(interaction) {
     const user = interaction.options.getMember('member');
 
-    await interaction.send(`${user.displayName} \n ${user.displayAvatarURL()} `);
+    await interaction.reply(`${user.displayName} \n ${user.displayAvatarURL()} `);
   },
 };
