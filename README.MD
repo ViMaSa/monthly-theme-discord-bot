@@ -3,13 +3,15 @@
 I am in a discord server with a friends and family. We have been using this discord server for a few years and randomly decided to do monthly themes. Originally this meant that we would just change our display avatar, display banner, and display name. We originally chose the theme based on different holidays that month. An example of a theme was Jazz Appreciation Month in April. Each member who decided to participate would pick a random Jazz artist in time and change their avatar, banner, and name. This extends to other Holidays in each month. Over time we started to forget what holidays we had already done and who we had chosen to be our avatars. Now, we choose random themes each month. This Discord bot will take a "snapshot" of each participant's information and keep a record of the theme of the month. Over time we can look back at the history of avatars and themes. Eventually I will add the ability to vote on who picked the funniest, most clever, or other some other description of the month. Sort of like an "employee of the month" but for monthly themes.
 
 ## What happens with this bot?
-- Bot creates a new text channel (monthly-theme-snapshots)
+- Bot creates new category for bot to only be concerned about
+- Bot creates new channels needed for this bot's communication
+- Bot creates new roles for participants and will eventually add for admin roles
 - Bot Introduces itself and how it works
 - Explain each command as well
 
 ### Establish participants
 - Sends a message with an emoji for users to react to (checkmark)
-  - If a user reacts to the emoji, the user gets assigned a role (monthly-theme-participant)
+  - If a user reacts to the emoji, the user gets assigned a role (Monthly Theme Bot - Participant)
   - If a user un-reacts to the emoji, the user gets the role removed
 
 ## Commands
@@ -66,3 +68,6 @@ I am in a discord server with a friends and family. We have been using this disc
 ## Lessons learned during development:
 - Enable eslint Rules and customize rules
 - Create and use config.json file for token security
+- Separation of concerns. Events trigger imported functions that use imported models.
+- Refactoring of code to be more readable
+- Better understanding of how to deal with promises
