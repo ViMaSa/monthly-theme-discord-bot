@@ -1,36 +1,20 @@
-const { participant } = require('../initialObjects/initialRoles');
+const { ReactionRole } = require('./ReactionRole');
 
 const sendIntroductionMsg = async (channel) => {
-  const msg = await channel.send('testing');
+  const collectorParams = {
+    dispose: true,
+    time: 60000,
+  };
+
+  const msg = await channel.send(
+    `I'm **${channel.guild.client.user.username}** look at me! I hear that this server is going to hosting monthly themes! ` +
+    'If you wish to participate, click the checkmark reaction emoji on this message and you will be a participant! ' +
+    `This message will only be able to assign roles for the next ${collectorParams.time / 1000} seconds. ` +
+    'Don\'t worry, this role can also be assigned later!',
+  ).catch(console.error);
   msg.react('✅');
 
-  const reactionFilter = (reaction) => reaction.emoji.name === '✅';
-
-  const collector = await msg.createReactionCollector({
-    dispose: true,
-    filter: reactionFilter,
-    time: 60000,
-  });
-
-  collector.on('collect', async (reaction, member) => {
-    if (member.id !== process.env.CLIENT_ID && reaction.emoji.name === '✅') {
-      const roleAssign = await reaction.message.guild.roles.cache.find(role => role.name === participant.name);
-      await reaction.message.guild.members.cache.get(member.id).roles.add(roleAssign);
-      console.log('success ' + member.id);
-    }
-  });
-
-  collector.on('remove', async (reaction, member) => {
-    if (member.id !== process.env.CLIENT_ID && reaction.emoji.name === '✅') {
-      const roleRemoved = await reaction.message.guild.roles.cache.find(role => role.name === participant.name);
-      await reaction.message.guild.members.cache.get(member.id).roles.remove(roleRemoved);
-      console.log('removing role');
-    }
-  });
-
-  collector.on('end', () => {
-    console.log('Stopped listening!');
-  });
+  await ReactionRole(msg, collectorParams);
 };
 
 module.exports = {

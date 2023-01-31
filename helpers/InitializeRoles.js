@@ -1,6 +1,7 @@
 const InitializeRoles = async (guildRoles, roleCollection) => {
   for (const role of roleCollection) {
-    const foundRole = guildRoles.cache
+    const foundRole = guildRoles
+      .cache
       .some(cachedRole => cachedRole.name === role.name);
 
     if (!foundRole) {
