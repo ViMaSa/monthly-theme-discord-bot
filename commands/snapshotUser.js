@@ -1,22 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js');
-
-const checkChannel = (interaction) => {
-  return interaction.channel.name === 'monthly-theme-general';
-};
-
-const checkUserRole = (interaction) => {
-  const role = interaction
-    .guild
-    .roles
-    .cache
-    .find(cachedRole => cachedRole.name === 'Monthly Theme - Participant');
-
-  return role.members.some(member => member.user.id === interaction.user.id);
-};
+const { participantValidation } = require('../validators/roleValidator');
+const { themeGeneralValidation } = require('../validators/channelValidator');
 
 const snapshotReplies = async (interaction, user) => {
-  const userHasRole = checkUserRole(interaction);
-  const correctChannel = checkChannel(interaction);
+  const userHasRole = participantValidation(interaction);
+  const correctChannel = themeGeneralValidation(interaction);
   const replyObj = {
     content: '',
     ephemeral: false,
