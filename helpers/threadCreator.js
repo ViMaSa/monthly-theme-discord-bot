@@ -1,4 +1,5 @@
 const { recordsTxtChannel } = require('../initialObjects/initialChannels');
+const { getMemberEmbed } = require('../helpers/embedCreator');
 const roles = require('../initialObjects/initialRoles');
 
 const getParticipants = async (guild) => {
@@ -20,29 +21,44 @@ const getParticipants = async (guild) => {
   return participants;
 };
 
-/*
-  Thread creation needs a few properties:
-    name:
-    autoArchiveDuration:
-    reason:
-    type: GUILD_PUBLIC_THREAD
-    parent: <channel>
-    parentId: <channelId>
-    unarchivable:
-    viewable: true
-*/
+const getCurrentMonth = () => {
+  const month = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  const date = new Date();
+  return month[date.getMonth()];
+};
+
+const getCurrentFullYear = () => {
+  return new Date().getFullYear();
+};
+
 const createRecordsThemeThread = async (guild) => {
+  const threadObj = {};
+  threadObj.name = `${getCurrentMonth()} ${getCurrentFullYear()}`;
   const parent = guild.channels.cache.find(cachedChan => cachedChan.name === recordsTxtChannel.name);
 
   const participants = await getParticipants(guild);
 
-  const thread = await parent.threads.create({
-    name: 'February 2023',
-    reason: 'New monthly theme channel created',
-  });
+  const thread = await parent.threads.create(threadObj);
 
   participants.each(async participant => {
-    await thread.send(participant.displayAvatarURL());
+    const userId = String(participant.id);
+    await guild.client.users.fetch(userId, { force: true });
+    const embed = getMemberEmbed(participant);
+    thread.send({ embeds: [embed] });
   });
 };
 
