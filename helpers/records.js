@@ -1,6 +1,21 @@
-const { EmbedBuilder } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 
-const getMemberEmbed = (participant) => {
+const sendRecordForm = async (interaction) => {
+  const row = new ActionRowBuilder()
+    .addComponents(
+      new ButtonBuilder()
+        .setCustomId('form')
+        .setLabel('Theme Form Button')
+        .setStyle(ButtonStyle.Primary),
+    );
+
+  await interaction.reply({
+    content: 'hello',
+    components: [row],
+  });
+};
+
+const createParticipantRecord = (participant) => {
   const participantEmbed = new EmbedBuilder();
 
   participantEmbed.setColor(0x0099FF);
@@ -26,5 +41,6 @@ const getMemberEmbed = (participant) => {
 };
 
 module.exports = {
-  getMemberEmbed,
+  createParticipantRecord,
+  sendRecordForm,
 };

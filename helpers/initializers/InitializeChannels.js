@@ -1,4 +1,4 @@
-const { sendIntroductionMsg } = require('./introductionMessage');
+const { sendIntroductionMessage } = require('../standardMessages');
 
 const InitializeChannels = async (guildChannels, channelCollection) => {
 
@@ -21,7 +21,7 @@ const InitializeChannels = async (guildChannels, channelCollection) => {
 
 const introMessage = (channel) => {
   if (channel.name === 'monthly-theme-general') {
-    sendIntroductionMsg(channel);
+    sendIntroductionMessage(channel);
   }
 };
 

@@ -13,11 +13,4 @@ module.exports = {
       reason: 'Voted as the best participant of the month',
       mentionable: true,
     },
-  monthlyThemeAdmin:
-    {
-      name: 'Monthly Theme - Admin',
-      color: '#C2E450',
-      reason: 'Admin role for monthly theme commands',
-      mentionable: false,
-    },
 };

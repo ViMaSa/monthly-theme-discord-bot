@@ -22,7 +22,7 @@ const verifiedMessage = (memberId, emojiName) => {
   return memberId !== process.env.CLIENT_ID && emojiName === '✅' ? true : false;
 };
 
-const ReactionRole = async (message, collectorParams) => {
+const reactionRole = async (message, collectorParams) => {
   const collector = await message.createReactionCollector(collectorParams);
 
   collector.on('collect', async (reaction, member) => {
@@ -31,7 +31,6 @@ const ReactionRole = async (message, collectorParams) => {
         const roleAssigned = getParticipantRole(reaction);
 
         await getMember(reaction, member.id).roles.add(roleAssigned);
-        console.log('Role Assigned to: ' + member.id);
       }
       catch (error) {
         console.log(error);
@@ -46,7 +45,6 @@ const ReactionRole = async (message, collectorParams) => {
         const roleRemoved = getParticipantRole(reaction);
 
         await getMember(reaction, member.id).roles.remove(roleRemoved);
-        console.log('Role Removed from: ' + member.id);
       }
       catch (error) {
         console.log(error);
@@ -55,12 +53,13 @@ const ReactionRole = async (message, collectorParams) => {
     }
   });
 
-  collector.on('end', () => {
+  collector.on('end', async () => {
+    await message.reply('Participant sign up has been closed!');
     console.log('Collector stopped listening!');
   });
 };
 
 module.exports = {
-  ReactionRole,
+  reactionRole,
 };
 

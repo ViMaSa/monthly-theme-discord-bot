@@ -1,6 +1,6 @@
 const { Events } = require('discord.js');
-const { InitializeChannels } = require('../helpers/InitializeChannels');
-const { InitializeRoles } = require('../helpers/InitializeRoles');
+const { InitializeChannels } = require('../helpers/initializers/InitializeChannels');
+const { InitializeRoles } = require('../helpers/initializers/InitializeRoles');
 const InitialChannels = require('../initialObjects/initialChannels');
 const InitialRoles = require('../initialObjects/initialRoles');
 
